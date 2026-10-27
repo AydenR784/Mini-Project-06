@@ -1,1 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Multiple Choice Quiz</title>
+  <style>
+    body {
+      max-width: 760px;
+      margin: 30px auto;
+      padding: 0 16px;
+      color: #222;
+      background: #f3f5f7;
+      font-family: Arial, sans-serif;
+    }
 
+    h1, h2 {
+      color: #214e70;
+    }
+
+    .card {
+      margin: 16px 0;
+      padding: 18px;
+      border: 1px solid #cbd4dc;
+      border-radius: 8px;
+      background: white;
+    }
+
+    .answer-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .answer-option {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      min-height: 24px;
+      margin: 0;
+      padding: 12px;
+      border: 1px solid #cbd4dc;
+      border-radius: 6px;
+      background: #fff;
+      cursor: pointer;
+      transition: border-color 150ms ease, background-color 150ms ease;
+    }
+
+    .answer-option:hover {
+      border-color: #214e70;
+      background: #f5f9fc;
+    }
+
+    .answer-option.selected {
+      border-color: #214e70;
+      background: #e5f1f8;
+      box-shadow: inset 0 0 0 1px #214e70;
+    }
+
+    .answer-option input {
+      flex: 0 0 auto;
+      margin: 3px 0 0;
+      accent-color: #214e70;
+    }
+
+    .answer-option:focus-within {
+      outline: 2px solid #214e70;
+      outline-offset: 2px;
+    }
+
+    button {
+      margin: 8px 8px 0 0;
+      padding: 10px 15px;
+      border: 0;
+      border-radius: 4px;
+      color: white;
+      background: #214e70;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #16374f;
+    }
+
+    .hint {
+      color: #4a5964;
+      font-size: 0.95rem;
+    }
+
+    .result {
+      margin-top: 16px;
+      padding: 12px;
+      border-left: 4px solid #214e70;
+      background: #edf4f8;
+    }
+
+    .correct {
+      color: #176b36;
+    }
+
+    .incorrect {
+      color: #9c2929;
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+    @media (max-width: 520px) {
+      body {
+        margin-top: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>My Multiple Choice Quiz</h1>
+    <p>Replace the question and answer placeholders in the questions list in the JavaScript.</p>
+  </header>
+
+  <main>
+    <section id="quiz">
+      <h2>Choose an answer for each question</h2>
+      <p class="hint">Select one choice for every question, then submit your quiz.</p>
+      <form id="quiz-form">
+        <div id="quiz-questions"></div>
+        <button type="submit">Submit Quiz</button>
+      </form>
+      <div id="score" class="result" aria-live="polite" hidden></div>
+      <button type="button" id="restart-button" hidden>Try Again</button>
+    </section>
+  </main>
+
+  <script>
+    const questions = [
+      { text: "Question 1 placeholder", answers: ["Option A placeholder", "Option B placeholder", "Option C placeholder", "Option D placeholder"], correctAnswer: 0 },
+      { text: "Question 2 placeholder", answers: ["Option A placeholder", "Option B placeholder", "Option C placeholder", "Option D placeholder"], correctAnswer: 0 },
+      { text: "Question 3 placeholder", answers: ["Option A placeholder", "Option B placeholder", "Option C placeholder", "Option D placeholder"], correctAnswer: 0 },
+      { text: "Question 4 placeholder", answers: ["Option A placeholder", "Option B placeholder", "Option C placeholder", "Option D placeholder"], correctAnswer: 0 },
+      { text: "Question 5 placeholder", answers: ["Option A placeholder", "Option B placeholder", "Option C placeholder", "Option D placeholder"], correctAnswer: 0 },
+      { text: "Question 6 placeholder", answers: ["Option A placeholder", "Option B placeholder", "Option C placeholder", "Option D placeholder"], correctAnswer: 0 },
+      { text: "Question 7 placeholder", answers: ["Option A placeholder", "Option B placeholder", "Option C placeholder", "Option D placeholder"], correctAnswer: 0 },
+      { text: "Question 8 placeholder", answers: ["Option A placeholder", "Option B placeholder", "Option C placeholder", "Option D placeholder"], correctAnswer: 0 },
+      { text: "Question 9 placeholder", answers: ["Option A placeholder", "Option B placeholder", "Option C placeholder", "Option D placeholder"], correctAnswer: 0 },
+      { text: "Question 10 placeholder", answers: ["Option A placeholder", "Option B placeholder", "Option C placeholder", "Option D placeholder"], correctAnswer: 0 },
+      { text: "Question 11 placeholder", answers: ["Option A placeholder", "Option B placeholder", "Option C placeholder", "Option D placeholder"], correctAnswer: 0 },
+      { text: "Question 12 placeholder", answers: ["Option A placeholder", "Option B placeholder", "Option C placeholder", "Option D placeholder"], correctAnswer: 0 },
+      { text: "Question 13 placeholder", answers: ["Option A placeholder", "Option B placeholder", "Option C placeholder", "Option D placeholder"], correctAnswer: 0 },
+      { text: "Question 14 placeholder", answers: ["Option A placeholder", "Option B placeholder", "Option C placeholder", "Option D placeholder"], correctAnswer: 0 },
+      { text: "Question 15 placeholder", answers: ["Option A placeholder", "Option B placeholder", "Option C placeholder", "Option D placeholder"], correctAnswer: 0 }
+    ];
+
+    const quizQuestions = document.getElementById("quiz-questions");
+    const quizForm = document.getElementById("quiz-form");
+    const score = document.getElementById("score");
+    const restartButton = document.getElementById("restart-button");
+
+    function showQuestions() {
+      questions.forEach(function (question, questionNumber) {
+        const card = document.createElement("section");
+        card.className = "card";
+
+        const heading = document.createElement("h3");
+        heading.textContent = questionNumber + 1 + ". " + question.text;
+        card.appendChild(heading);
+
+        const answersGrid = document.createElement("div");
+        answersGrid.className = "answer-grid";
+        question.answers.forEach(function (answer, answerNumber) {
+          const label = document.createElement("label");
+          label.className = "answer-option";
+          const choice = document.createElement("input");
+          choice.type = "radio";
+          choice.name = "question-" + questionNumber;
+          choice.value = answerNumber;
+          choice.required = true;
+          choice.addEventListener("change", function () {
+            card.querySelectorAll(".answer-option").forEach(function (option) {
+              option.classList.toggle("selected", option.contains(choice));
+            });
+          });
+          const answerText = document.createElement("span");
+          answerText.textContent = answer;
+          label.append(choice, answerText);
+          answersGrid.appendChild(label);
+        });
+        card.appendChild(answersGrid);
+        quizQuestions.appendChild(card);
+      });
+    }
+
+    function addFeedback(message, className) {
+      const paragraph = document.createElement("p");
+      paragraph.className = className;
+      paragraph.textContent = message;
+      score.appendChild(paragraph);
+    }
+
+    quizForm.addEventListener("submit", function (event) {
+      event.preventDefault();
+      let totalCorrect = 0;
+      score.replaceChildren();
+
+      questions.forEach(function (question, questionNumber) {
+        const selectedAnswer = document.querySelector(
+          '[name="question-' + questionNumber + '"]:checked'
+        );
+        const isCorrect = Number(selectedAnswer.value) === question.correctAnswer;
+
+        if (isCorrect) {
+          totalCorrect++;
+          addFeedback("Question " + (questionNumber + 1) + ": Correct!", "correct");
+        } else {
+          addFeedback(
+            "Question " + (questionNumber + 1) + ": Not quite. The correct answer was " +
+            question.answers[question.correctAnswer] + ".",
+            "incorrect"
+          );
+        }
+      });
+
+      let message = "Keep practicing!";
+      if (totalCorrect === questions.length) {
+        message = "Perfect score!";
+      } else if (totalCorrect >= Math.ceil(questions.length * 0.6)) {
+        message = "Good job!";
+      } else if (totalCorrect >= 1) {
+        message = "Nice try!";
+      }
+
+      const summary = document.createElement("p");
+      const boldScore = document.createElement("strong");
+      boldScore.textContent = "You scored " + totalCorrect + " out of " +
+        questions.length + "! " + message;
+      summary.appendChild(boldScore);
+      score.prepend(summary);
+      score.hidden = false;
+      restartButton.hidden = false;
+    });
+
+    restartButton.addEventListener("click", function () {
+      quizForm.reset();
+      quizForm.querySelectorAll(".answer-option").forEach(function (option) {
+        option.classList.remove("selected");
+      });
+      score.replaceChildren();
+      score.hidden = true;
+      restartButton.hidden = true;
+    });
+
+    showQuestions();
+  </script>
+</body>
+</html>
