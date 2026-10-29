@@ -116,14 +116,14 @@
 </head>
 <body>
   <header>
-    <h1>My Multiple Choice Quiz</h1>
-    <p>Replace the question and answer placeholders in the questions list in the JavaScript.</p>
+    <h1>Lord of the Rings Multiple Choice Quiz</h1>
+    <p>See if you know the greater Middle-Earth facts</p>
   </header>
 
   <main>
     <section id="quiz">
       <h2>Choose an answer for each question</h2>
-      <p class="hint">Select one choice for every question, then submit your quiz.</p>
+      <p class="hint">Select one choice for every question, then submit your quiz</p>
       <form id="quiz-form">
         <div id="quiz-questions"></div>
         <button type="submit">Submit Quiz</button>
@@ -135,7 +135,7 @@
 
   <script>
     const questions = [
-      { text: "Question 1 placeholder", answers: ["Option A placeholder", "Option B placeholder", "Option C placeholder", "Option D placeholder"], correctAnswer: 0 },
+      { text: "What is the last name of the main character in Lord of the Rings?", answers: ["Boggins", "Baggins", "Brandybuck", "Mithrandir"], correctAnswer: 0 },
       { text: "Question 2 placeholder", answers: ["Option A placeholder", "Option B placeholder", "Option C placeholder", "Option D placeholder"], correctAnswer: 0 },
       { text: "Question 3 placeholder", answers: ["Option A placeholder", "Option B placeholder", "Option C placeholder", "Option D placeholder"], correctAnswer: 0 },
       { text: "Question 4 placeholder", answers: ["Option A placeholder", "Option B placeholder", "Option C placeholder", "Option D placeholder"], correctAnswer: 0 },
@@ -221,13 +221,13 @@
         }
       });
 
-      let message = "Keep practicing!";
+      let message = "You actually suck";
       if (totalCorrect === questions.length) {
-        message = "Perfect score!";
+        message = "you aren't larping!";
       } else if (totalCorrect >= Math.ceil(questions.length * 0.6)) {
-        message = "Good job!";
+        message = "Not bad for a kid your age";
       } else if (totalCorrect >= 1) {
-        message = "Nice try!";
+        message = "you could do better man";
       }
 
       const summary = document.createElement("p");
