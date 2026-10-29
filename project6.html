@@ -135,6 +135,16 @@
 
   <script>
     const questions = [
+<<<<<<< HEAD
+      { text: "What is the last name of the main character in Lord of the Rings?", answers: ["Boggins", "Baggins", "Brandybuck", "Mithrandir"], correctAnswer: 1 },
+      { text: "What species is Gollum?", answers: ["Hobbit", "Orc", "Goblin", "Maiar"], correctAnswer: 0 },
+      { text: "What is the name of the Giant Spider in Mordor?", answers: ["Morgoth", "Ungoliant", "Morgul", "Shelob"], correctAnswer: 3 },
+      { text: "What is the capital of Gondor?", answers: ["Minas Tirith", "Mordor", "Rohan", "Lothlórien"], correctAnswer: 0 },
+      { text: "What is the name of Thorin Oakenshield's sword?", answers: ["Glamdring", "Sting", "Orcrist", "Foe-hammer"], correctAnswer: 2 },
+      { text: "Where do the elves go once they depart from the Grey Havens?", answers: ["Umbar", "Gundabad", "Harad", "Valinor"], correctAnswer: 3 },
+      { text: "Who is the bartender at the Prancing Pony?", answers: ["Barliman Butterbur", "Gildor Inglorion", "Radagast", "Aragorn"], correctAnswer: 0 },
+      { text: "How many dwarves are in the company of Thorin?", answers: ["9 + Bilbo and Gandalf", "13 + Bilbo and Gandalf", "4 + Bilbo and Gandalf", "16 + Gandalf"], correctAnswer: 1 },
+=======
       { text: "What is the last name of the main character in Lord of the Rings?", answers: ["Boggins", "Baggins", "Brandybuck", "Mithrandir"], correctAnswer: 0 },
       { text: "Question 2 placeholder", answers: ["Option A placeholder", "Option B placeholder", "Option C placeholder", "Option D placeholder"], correctAnswer: 0 },
       { text: "Question 3 placeholder", answers: ["Option A placeholder", "Option B placeholder", "Option C placeholder", "Option D placeholder"], correctAnswer: 0 },
@@ -143,6 +153,7 @@
       { text: "Question 6 placeholder", answers: ["Option A placeholder", "Option B placeholder", "Option C placeholder", "Option D placeholder"], correctAnswer: 0 },
       { text: "Question 7 placeholder", answers: ["Option A placeholder", "Option B placeholder", "Option C placeholder", "Option D placeholder"], correctAnswer: 0 },
       { text: "Question 8 placeholder", answers: ["Option A placeholder", "Option B placeholder", "Option C placeholder", "Option D placeholder"], correctAnswer: 0 },
+>>>>>>> 16f7b0adb494e5f42dc86511ded423337b045ba8
       { text: "Question 9 placeholder", answers: ["Option A placeholder", "Option B placeholder", "Option C placeholder", "Option D placeholder"], correctAnswer: 0 },
       { text: "Question 10 placeholder", answers: ["Option A placeholder", "Option B placeholder", "Option C placeholder", "Option D placeholder"], correctAnswer: 0 },
       { text: "Question 11 placeholder", answers: ["Option A placeholder", "Option B placeholder", "Option C placeholder", "Option D placeholder"], correctAnswer: 0 },
@@ -212,6 +223,12 @@
         if (isCorrect) {
           totalCorrect++;
           addFeedback("Question " + (questionNumber + 1) + ": Correct!", "correct");
+        } else if (questionNumber < 8) {
+          addFeedback(
+            "Question " + (questionNumber + 1) + ": Incorrect. Correct answer: " +
+            question.answers[question.correctAnswer] + ".",
+            "incorrect"
+          );
         } else {
           addFeedback(
             "Question " + (questionNumber + 1) + ": Not quite. The correct answer was " +
